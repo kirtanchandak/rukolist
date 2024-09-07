@@ -4,6 +4,8 @@ import { encodedRedirect } from "@/utils/utils";
 import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { Provider } from '@supabase/supabase-js'
+import { getURL } from "@/utils/helpers";
 
 export const signUpAction = async (formData: FormData) => {
   const email = formData.get("email")?.toString();
@@ -128,3 +130,24 @@ export const signOutAction = async () => {
   await supabase.auth.signOut();
   return redirect("/sign-in");
 };
+
+export async function oAuthSignIn(provider: Provider) {
+  if (!provider) {
+      return redirect('/login?message=No provider selected')
+  }
+
+  const supabase = createClient();
+  const redirectUrl = getURL("/auth/callback")
+  const { data, error } = await supabase.auth.signInWithOAuth({
+      provider,
+      options: {
+          redirectTo: redirectUrl,
+      }
+  })
+
+  if (error) {
+      redirect('/login?message=Could not authenticate user')
+  }
+
+  return redirect(data.url)
+}
