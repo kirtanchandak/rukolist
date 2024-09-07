@@ -1,10 +1,13 @@
 import { IoIosArrowRoundForward } from "react-icons/io";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 export default function Hero() {
   return (
     <>
-      <div className="flex items-center justify-center py-24 bg-primary">
-        <div className="h-screen">
+      <div className=" bg-primary">
+        <Navbar />
+        <div className="h-screen pt-24">
           <h1 className="text-4xl font-extrabold text-center text-secondary">
             Everything you need to launch. <br /> In one, simple link.
           </h1>
@@ -26,6 +29,7 @@ export default function Hero() {
             </button>
           </form>
         </div>
+        <Footer />
       </div>
     </>
   );
