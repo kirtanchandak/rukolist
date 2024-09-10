@@ -35,35 +35,6 @@ export const addProductName = async (formData: FormData) => {
   return data;
 };
 
-export const getProductName = async () => {
-  const supabase = createClient();
-
-  const {
-    data: { user },
-    error: authError,
-  } = await supabase.auth.getUser();
-
-  if (authError) {
-    throw new Error("Error fetching user!");
-  }
-
-  if (!user) {
-    throw new Error("User is not logged in!");
-  }
-
-  const { data, error } = await supabase
-    .from("products")
-    .select("productname")
-    .eq("user_id", user.id)
-    .single();
-
-  if (error) {
-    throw new Error("Error fetching product!");
-  }
-
-  return data.productname;
-};
-
 export const addEmail = async (formData: FormData) => {
   const supabase = createClient();
   const email = formData.get("email");
@@ -138,10 +109,26 @@ export const fetchProductDetails = async (productName: string) => {
     throw new Error("Product name is required");
   }
 
+  // Retrieve the currently authenticated user
+  const {
+    data: { user },
+    error: authError,
+  } = await supabase.auth.getUser();
+
+  if (authError) {
+    throw new Error("Error fetching user!");
+  }
+
+  if (!user) {
+    throw new Error("User is not logged in!");
+  }
+
+  // Fetch the product details for the authenticated user
   const { data, error } = await supabase
     .from("products")
     .select("id, user_id, productname, emails")
     .eq("productname", productName)
+    .eq("user_id", user.id)
     .single();
 
   if (error) {
@@ -149,7 +136,9 @@ export const fetchProductDetails = async (productName: string) => {
   }
 
   if (!data) {
-    throw new Error("Product not found");
+    throw new Error(
+      "Product not found or you do not have access to this product"
+    );
   }
 
   return data;

@@ -3,34 +3,13 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { getProductName } from "@/app/actions/actions";
 import { FaLinkedin } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import EmailForm from "@/components/EmailForm";
 
-const ProductPage = () => {
-  const [product, setProduct] = useState("");
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const fetchedProduct: any = await getProductName();
-        setProduct(fetchedProduct);
-      } catch (error) {
-        console.error("Error fetching product:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProduct();
-  }, []);
-
-  if (loading) {
-    return <p>Loading...</p>;
-  }
+const ProductPage = ({ params }: { params: { productname: string } }) => {
+  const { productname } = params;
 
   return (
     <>
@@ -44,10 +23,10 @@ const ProductPage = () => {
               We are coming Soon
             </h1>
             <p className="text-2xl font-bold md:text-[26px] text-[#A1724E]/60">
-              {product}.ai
+              {productname}
             </p>
           </div>
-          <EmailForm productname={product} />
+          <EmailForm productname={productname} />
           <div>
             <p className="text-[#B1ACA4] text-[12px] text-center mt-2">
               we care about your data in our{" "}

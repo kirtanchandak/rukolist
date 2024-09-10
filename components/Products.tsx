@@ -48,7 +48,7 @@ const ProductList: React.FC = () => {
                     href="#"
                     onClick={(e) => {
                       e.preventDefault();
-                      router.push(`/admin/${product.productname}`);
+                      router.push(`/admin/product?=${product.productname}`);
                     }}
                     className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100"
                   >
