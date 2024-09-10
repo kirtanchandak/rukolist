@@ -1,7 +1,7 @@
 "use client";
 
 import { getProductName } from "../actions/actions"; // Import the server-side action
-import ShowcaseComponent from "@/components/ShowcaseComponent"; // Import the showcase component
+import ProductPage from "../[productname]/page";
 
 const Dashboard = () => {
   const handleSave = () => {
@@ -15,7 +15,7 @@ const Dashboard = () => {
 
       {/* Render the Showcase Component */}
       <div className="mb-6">
-        <ShowcaseComponent />
+        <ProductPage />
       </div>
 
       <button

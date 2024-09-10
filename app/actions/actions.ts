@@ -2,6 +2,7 @@
 
 import { createClient } from "@/utils/supabase/server";
 
+// Function to add a product name to the database
 export const addProductName = async (formData: FormData) => {
   const supabase = createClient();
   const productname = formData.get("productname");
@@ -34,6 +35,7 @@ export const addProductName = async (formData: FormData) => {
   return data;
 };
 
+// Function to get the product name from the database
 export const getProductName = async () => {
   const supabase = createClient();
 
@@ -61,4 +63,44 @@ export const getProductName = async () => {
   }
 
   return data.productname;
+};
+
+export const addEmail = async (formData: FormData) => {
+  const supabase = createClient();
+  const email = formData.get("email");
+  const productname = formData.get("productname");
+
+  if (!email || !productname) {
+    throw new Error("Email and product name are required");
+  }
+
+  const { data: productData, error: productError } = await supabase
+    .from("products")
+    .select("id, emails")
+    .eq("productname", productname)
+    .single();
+
+  if (productError || !productData) {
+    throw new Error("Product not found!");
+  }
+
+  const productId = productData.id;
+  const currentEmails = productData.emails || [];
+
+  if (currentEmails.includes(email)) {
+    throw new Error("Email is already in the waitlist!");
+  }
+
+  const updatedEmails = [...currentEmails, email];
+
+  const { data: updateData, error: updateError } = await supabase
+    .from("products")
+    .update({ emails: updatedEmails })
+    .eq("id", productId);
+
+  if (updateError) {
+    throw new Error("Error updating product with new email!");
+  }
+
+  return updateData;
 };
