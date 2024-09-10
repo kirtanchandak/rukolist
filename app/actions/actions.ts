@@ -35,7 +35,6 @@ export const addProductName = async (formData: FormData) => {
   return data;
 };
 
-// Function to get the product name from the database
 export const getProductName = async () => {
   const supabase = createClient();
 
@@ -103,4 +102,55 @@ export const addEmail = async (formData: FormData) => {
   }
 
   return updateData;
+};
+
+export const getProductNames = async () => {
+  const supabase = createClient();
+  const {
+    data: { user },
+    error: authError,
+  } = await supabase.auth.getUser();
+
+  if (authError) {
+    throw new Error("Error fetching user!");
+  }
+
+  if (!user) {
+    throw new Error("User is not logged in!");
+  }
+
+  // Fetch the product names for the authenticated user
+  const { data, error } = await supabase
+    .from("products")
+    .select("productname")
+    .eq("user_id", user.id);
+
+  if (error) {
+    throw new Error("Error fetching product names: " + error.message);
+  }
+
+  return data;
+};
+
+export const fetchProductDetails = async (productName: string) => {
+  const supabase = createClient();
+  if (!productName) {
+    throw new Error("Product name is required");
+  }
+
+  const { data, error } = await supabase
+    .from("products")
+    .select("id, user_id, productname, emails")
+    .eq("productname", productName)
+    .single();
+
+  if (error) {
+    throw new Error(`Error fetching product details: ${error.message}`);
+  }
+
+  if (!data) {
+    throw new Error("Product not found");
+  }
+
+  return data;
 };
