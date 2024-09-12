@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { addProductName } from "../actions/actions";
 
@@ -21,6 +21,24 @@ const ProductEntry = () => {
     }
   };
 
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await fetch("/api/auth/me");
+      if (res.ok) {
+        const data = await res.json();
+        setUser(data.user);
+        console.log(data);
+      }
+    };
+    fetchUser();
+  }, []);
+
+  if (!user) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <>
       <div className="h-screen flex flex-col justify-center items-center">
@@ -36,7 +54,7 @@ const ProductEntry = () => {
           onClick={handleSubmit}
           className="bg-blue-500 text-white mt-4 py-2 px-4 rounded"
         >
-          Create
+          Create {user.name}
         </button>
       </div>
     </>
