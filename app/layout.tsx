@@ -19,6 +19,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <script
+          id="otpless-sdk"
+          type="text/javascript"
+          src="https://otpless.com/v2/auth.js"
+          data-appid="4QH9YPPV7IJFG6V28EXE"
+        ></script>
+      </head>
       <body className={`${poppins.className} antialiased`}>{children}</body>
     </html>
   );

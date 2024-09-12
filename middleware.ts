@@ -1,13 +1,21 @@
-import { type NextRequest } from "next/server";
-import { updateSession } from "@/utils/supabase/middleware";
+import { NextResponse, NextRequest } from "next/server";
+import jwt from "jsonwebtoken";
 
-export async function middleware(request: NextRequest) {
-  return await updateSession(request);
+export function middleware(req: NextRequest) {
+  const token = req.cookies.get("auth_token")?.value;
+
+  if (!token) {
+    return NextResponse.redirect(new URL("/login", req.url));
+  }
+
+  try {
+    jwt.verify(token, process.env.JWT_SECRET || "");
+    return NextResponse.next();
+  } catch (err) {
+    return NextResponse.redirect(new URL("/login", req.url));
+  }
 }
 
 export const config = {
-  matcher: [
-    "/launchproduct",
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
-  ],
+  matcher: ["/dashboard"],
 };
