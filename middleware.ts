@@ -1,19 +1,13 @@
-import { NextResponse, type NextRequest } from "next/server";
+import { type NextRequest } from "next/server";
 import { updateSession } from "@/utils/supabase/middleware";
 
 export async function middleware(request: NextRequest) {
-  const response = await updateSession(request);
-
-  //@ts-ignore
-  if (!response?.user) {
-    const signInUrl = new URL("/sign-in", request.url);
-    signInUrl.searchParams.set("redirect", request.url);
-    return NextResponse.redirect(signInUrl);
-  }
-
-  return NextResponse.next();
+  return await updateSession(request);
 }
 
 export const config = {
-  matcher: ["/launchproduct", "/admin"],
+  matcher: [
+    "/launchproduct",
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+  ],
 };
