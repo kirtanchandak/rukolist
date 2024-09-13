@@ -20,7 +20,7 @@ export const addProductName = async (formData: FormData) => {
     .insert([{ productname: productname, user_id: user_id }]);
 
   if (error) {
-    throw new Error("Error adding product!");
+    console.log(error);
   }
 
   return data;
