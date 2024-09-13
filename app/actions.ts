@@ -4,7 +4,7 @@ import { encodedRedirect } from "@/utils/utils";
 import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { Provider } from '@supabase/supabase-js'
+import { Provider } from "@supabase/supabase-js";
 import { getURL } from "@/utils/helpers";
 
 export const signUpAction = async (formData: FormData) => {
@@ -32,7 +32,7 @@ export const signUpAction = async (formData: FormData) => {
     return encodedRedirect(
       "success",
       "/sign-up",
-      "Thanks for signing up! Please check your email for a verification link.",
+      "Thanks for signing up! Please check your email for a verification link."
     );
   }
 };
@@ -73,7 +73,7 @@ export const forgotPasswordAction = async (formData: FormData) => {
     return encodedRedirect(
       "error",
       "/forgot-password",
-      "Could not reset password",
+      "Could not reset password"
     );
   }
 
@@ -84,7 +84,7 @@ export const forgotPasswordAction = async (formData: FormData) => {
   return encodedRedirect(
     "success",
     "/forgot-password",
-    "Check your email for a link to reset your password.",
+    "Check your email for a link to reset your password."
   );
 };
 
@@ -98,7 +98,7 @@ export const resetPasswordAction = async (formData: FormData) => {
     encodedRedirect(
       "error",
       "/protected/reset-password",
-      "Password and confirm password are required",
+      "Password and confirm password are required"
     );
   }
 
@@ -106,7 +106,7 @@ export const resetPasswordAction = async (formData: FormData) => {
     encodedRedirect(
       "error",
       "/protected/reset-password",
-      "Passwords do not match",
+      "Passwords do not match"
     );
   }
 
@@ -118,7 +118,7 @@ export const resetPasswordAction = async (formData: FormData) => {
     encodedRedirect(
       "error",
       "/protected/reset-password",
-      "Password update failed",
+      "Password update failed"
     );
   }
 
@@ -133,21 +133,21 @@ export const signOutAction = async () => {
 
 export async function oAuthSignIn(provider: Provider) {
   if (!provider) {
-      return redirect('/login?message=No provider selected')
+    return redirect("/login?message=No provider selected");
   }
 
   const supabase = createClient();
-  const redirectUrl = getURL("/auth/callback")
+  const redirectUrl = getURL("/auth/callback");
   const { data, error } = await supabase.auth.signInWithOAuth({
-      provider,
-      options: {
-          redirectTo: redirectUrl,
-      }
-  })
+    provider,
+    options: {
+      redirectTo: redirectUrl,
+    },
+  });
 
   if (error) {
-      redirect('/login?message=Could not authenticate user')
+    redirect("/login?message=Could not authenticate user");
   }
 
-  return redirect(data.url)
+  return redirect(data.url);
 }
