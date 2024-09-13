@@ -1,25 +1,11 @@
-export const getURL = (): string => {
+export const getURL = () => {
   let url =
-    process?.env?.NEXT_PUBLIC_SITE_URL &&
-    process.env.NEXT_PUBLIC_SITE_URL.trim() !== ""
-      ? process.env.NEXT_PUBLIC_SITE_URL
-      : process?.env?.NEXT_PUBLIC_VERCEL_URL &&
-          process.env.NEXT_PUBLIC_VERCEL_URL.trim() !== ""
-        ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-        : process.env.VERCEL_URL && process.env.VERCEL_URL.trim() !== ""
-          ? `https://${process.env.VERCEL_URL}`
-          : "http://localhost:3000";
-
-  // Ensure trailing slash is removed
-  url = url.replace(/\/$/, "");
-
-  // Log the final URL (remove this in production)
-  console.log("Final URL:", url);
-
+    process?.env?.NEXT_PUBLIC_SITE_URL ?? // Set this to your site URL in production env.
+    process?.env?.NEXT_PUBLIC_VERCEL_URL ?? // Automatically set by Vercel.
+    "http://localhost:3000/";
+  // Make sure to include `https://` when not localhost.
+  url = url.startsWith("http") ? url : `https://${url}`;
+  // Make sure to include a trailing `/`.
+  url = url.endsWith("/") ? url : `${url}/`;
   return url;
-};
-
-// Usage example
-export const getCallbackURL = () => {
-  return `${getURL()}/auth/callback`;
 };

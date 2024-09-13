@@ -5,7 +5,7 @@ import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { Provider } from "@supabase/supabase-js";
-import { getCallbackURL, getURL } from "@/utils/helpers";
+import { getURL } from "@/utils/helpers";
 
 export const signUpAction = async (formData: FormData) => {
   const email = formData.get("email")?.toString();
@@ -137,12 +137,11 @@ export async function oAuthSignIn(provider: Provider) {
   }
 
   const supabase = createClient();
-  const redirectUrl = getCallbackURL();
 
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider,
     options: {
-      redirectTo: redirectUrl,
+      redirectTo: getURL(),
     },
   });
 
