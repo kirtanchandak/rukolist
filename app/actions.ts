@@ -138,10 +138,11 @@ export async function oAuthSignIn(provider: Provider) {
 
   const supabase = createClient();
 
+  // Start the OAuth flow
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider,
     options: {
-      redirectTo: getURL(),
+      redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/auth/callback`, // Set the OAuth redirect URL to handle callback
     },
   });
 
@@ -149,5 +150,6 @@ export async function oAuthSignIn(provider: Provider) {
     return redirect("/login?message=Could not authenticate user");
   }
 
+  // Redirect to the provided URL by Supabase (external OAuth provider's URL)
   return redirect(data.url);
 }
