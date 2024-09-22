@@ -9,6 +9,8 @@ import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import Emails from "@/components/dashboard/Emails";
 import { IoIosLogOut } from "react-icons/io";
+import { IoIosArrowRoundBack } from "react-icons/io";
+import Product from "@/components/dashboard/Product";
 
 interface Product {
   id: string;
@@ -40,7 +42,6 @@ const ProductDetailsPage = ({
         setError(error.message || "An error occurred");
       }
     };
-
     getProductDetails();
   }, [productname]);
 
@@ -62,14 +63,7 @@ const ProductDetailsPage = ({
       ContentComponent = <Emails emails={emails} />;
       break;
     default:
-      ContentComponent = (
-        <div>
-          <h1>Product Details: {product.productname}</h1>
-          <p>Product ID: {product.id}</p>
-          <p>User ID: {product.user_id}</p>
-          <p>Emails: {product.emails.join(", ")}</p>
-        </div>
-      );
+      ContentComponent = <Product productname={product.productname} />;
       break;
   }
 
@@ -127,10 +121,13 @@ const ProductDetailsPage = ({
             </div>
           </div>
           <div className="p-4">
-            <div className="flex items-center ml-2">
-              <IoIosLogOut className="text-black text-xl" />
-              <span className="font-medium text-sm ml-2">Logout</span>
-            </div>
+            <Link
+              href="/admin"
+              className="flex items-center ml-2 cursor-pointer"
+            >
+              <IoIosArrowRoundBack className="text-black text-xl" />
+              <span className="font-medium text-sm ml-2">Back to products</span>
+            </Link>
           </div>
         </div>
       </div>

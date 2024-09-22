@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Provider } from "@supabase/supabase-js";
-import { FaGoogle } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
 import { oAuthSignIn } from "../actions";
 
 type OAuthProvider = {
@@ -15,7 +15,7 @@ export function OAuthButtons() {
     {
       name: "google",
       displayName: "Google",
-      icon: <FaGoogle className="size-5" />,
+      icon: <FcGoogle className="size-5" />,
     },
   ];
 
@@ -23,7 +23,7 @@ export function OAuthButtons() {
     <>
       {oAuthProviders.map((provider) => (
         <Button
-          className="w-full flex items-center justify-center gap-2"
+          className="flex items-center justify-center gap-2"
           variant="outline"
           onClick={async () => {
             await oAuthSignIn(provider.name);
