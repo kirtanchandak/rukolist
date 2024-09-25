@@ -2,13 +2,17 @@
 
 import { createClient } from "@/utils/supabase/server";
 
-// Function to add a product name to the database
-export const addProductName = async (formData: FormData) => {
+export const addProductInfo = async (formData: FormData) => {
   const supabase = createClient();
   const productname = formData.get("productname");
+  const templateId = formData.get("templateId");
 
   if (!productname) {
     throw new Error("Product name is required");
+  }
+
+  if (!templateId) {
+    throw new Error("Template id is required");
   }
 
   const {
@@ -24,12 +28,31 @@ export const addProductName = async (formData: FormData) => {
     throw new Error("User is not logged in!");
   }
 
+  console.log("hiii");
+
+  console.log(productname, templateId);
+
   const { data, error } = await supabase
     .from("products")
-    .insert([{ productname: productname, user_id: user.id }]);
+    .insert([{ productname, templateId, user_id: user.id }]);
 
   if (error) {
     throw new Error("Error adding product!");
+  }
+
+  return data;
+};
+
+export const fetchProductInfo = async (productname: string) => {
+  const supabase = createClient();
+  const { data, error } = await supabase
+    .from("products")
+    .select("templateId")
+    .eq("productname", productname)
+    .single();
+
+  if (error) {
+    throw new Error("Error fetching product info");
   }
 
   return data;

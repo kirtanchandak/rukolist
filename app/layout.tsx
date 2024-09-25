@@ -3,16 +3,13 @@ import { Poppins } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
 
-// Initialize the Poppins font
 const poppins = Poppins({ subsets: ["latin"], weight: ["400", "700", "800"] });
 
-// Define metadata for the app
 export const metadata: Metadata = {
   title: "rukolist",
   description: "Launch you prouduct in a single link",
 };
 
-// Root layout component
 export default function RootLayout({
   children,
 }: Readonly<{

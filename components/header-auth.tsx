@@ -10,11 +10,11 @@ export default async function AuthButton() {
 
   return user ? (
     <div className="flex items-center gap-4">
-      <p className="text-secondary">Hey, {user.email}!</p>
+      <p className="">Hey, {user.email}!</p>
       <form action={signOutAction}>
         <Button
           type="submit"
-          className="py-2 px-4 bg-primary text-primary rounded-full font-medium"
+          className="py-2 px-4 bg-primary text-white rounded-full font-bold"
           variant={"outline"}
         >
           Sign out

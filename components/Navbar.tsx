@@ -19,8 +19,8 @@ export default function Navbar() {
           </Link>
           <div className="flex items-center gap-4">
             <div className="md:flex gap-4 hidden">
-              <p>Pricing</p>
-              <p>Contact</p>
+              <p className="font-semibold">Pricing</p>
+              <p className="font-semibold">Contact</p>
             </div>
             <AuthButton />
           </div>
