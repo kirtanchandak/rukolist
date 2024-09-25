@@ -14,7 +14,7 @@ export default async function AuthButton() {
       <form action={signOutAction}>
         <Button
           type="submit"
-          className="py-2 px-4 bg-secondary text-primary rounded-full"
+          className="py-2 px-4 bg-primary text-primary rounded-full font-medium"
           variant={"outline"}
         >
           Sign out
@@ -25,9 +25,9 @@ export default async function AuthButton() {
     <div className="flex items-center gap-8 0">
       <Link
         href="/sign-in"
-        className="py-2 px-4 bg-secondary text-primary rounded-full"
+        className="py-2 px-4 bg-primary text-white rounded-full font-bold"
       >
-        Sign in
+        Log in
       </Link>
     </div>
   );

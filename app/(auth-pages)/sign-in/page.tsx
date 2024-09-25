@@ -4,7 +4,6 @@ import { OAuthButtons } from "../oAuth-signin";
 export default function Login() {
   return (
     <>
-      <Navbar />
       <section className="bg-primary">
         <div className="flex flex-col items-center justify-center px-6 mx-auto h-screen">
           <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
