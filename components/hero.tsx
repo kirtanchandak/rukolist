@@ -7,8 +7,12 @@ import {
   MdOutlinePeopleOutline,
   MdOutlineShare,
 } from "react-icons/md";
+import { createClient } from "@/utils/supabase/server";
 
-export default function Hero() {
+export default async function Hero() {
+  const {
+    data: { user },
+  } = await createClient().auth.getUser();
   return (
     <>
       <div className=" bg-primary">
@@ -31,12 +35,25 @@ export default function Hero() {
                 required
               />
             </div>
-            <button
-              type="submit"
-              className="py-2 px-4 bg-secondary text-primary rounded-full flex items-center gap-1"
-            >
-              Launch now <IoIosArrowRoundForward className="text-2xl" />
-            </button>
+            {user ? (
+              <>
+                <Link
+                  href="/onboarding/product-name"
+                  className="py-2 px-4 bg-secondary text-primary rounded-full flex items-center gap-1"
+                >
+                  Launch now <IoIosArrowRoundForward className="text-2xl" />
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/sign-in"
+                  className="py-2 px-4 bg-secondary text-primary rounded-full flex items-center gap-1"
+                >
+                  Launch now <IoIosArrowRoundForward className="text-2xl" />
+                </Link>
+              </>
+            )}
           </form>
           <section className="py-12 md:py-28 lg:py-36">
             <div className="container px-4 md:px-6">

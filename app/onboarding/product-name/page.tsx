@@ -16,14 +16,14 @@ const ProductEntry = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col justify-center items-center">
-      <h2 className="text-2xl">Enter Your Product Name</h2>
+    <div className="h-screen flex flex-col justify-center items-center bg-primary">
+      <h2 className="text-3xl text-white">Enter Your Product Name</h2>
       <input
         type="text"
         value={productName}
         onChange={(e) => setProductName(e.target.value)}
         placeholder="Enter product name"
-        className="border p-2 mt-4"
+        className="rounded-md border p-2 mt-4"
       />
       <button
         onClick={handleSubmit}

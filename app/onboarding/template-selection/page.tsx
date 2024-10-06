@@ -7,7 +7,6 @@ import { addProductInfo } from "@/app/actions/actions";
 const templates = [
   { id: 1, name: "Modern Design" },
   { id: 2, name: "Minimal Design" },
-  { id: 3, name: "Creative Design" },
 ];
 
 const TemplateSelection = () => {

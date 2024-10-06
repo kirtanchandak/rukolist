@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { getProductNames } from "@/app/actions/actions";
+import { AiOutlinePlus } from "react-icons/ai";
+import Link from "next/link";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
@@ -37,9 +39,17 @@ const ProductList: React.FC = () => {
   return (
     <div className=" bg-primary">
       <div className="h-screen pt-14">
-        <h1 className="text-4xl font-extrabold text-center text-secondary">
-          Your Products
-        </h1>
+        <div className="flex items-center justify-center gap-8 px-4">
+          <h1 className="text-4xl font-extrabold text-center text-secondary">
+            Your Products
+          </h1>
+          <Link
+            href="/onboarding/product-name"
+            className="flex gap-2 items-center bg-secondary p-2 rounded-md"
+          >
+            New Product <AiOutlinePlus />
+          </Link>
+        </div>
         <div className="flex items-center justify-center pt-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             {loading

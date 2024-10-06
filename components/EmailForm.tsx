@@ -11,7 +11,7 @@ interface EmailFormProps {
 
 const EmailForm: React.FC<EmailFormProps> = ({ productname }) => {
   const [isPending, startTransition] = useTransition();
-  const [loading, setLoading] = useState(false); // New loading state
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -19,7 +19,7 @@ const EmailForm: React.FC<EmailFormProps> = ({ productname }) => {
     const form = new FormData(target);
     form.append("productname", productname);
 
-    setLoading(true); // Set loading to true when starting the submission
+    setLoading(true);
 
     try {
       await addEmail(form);
@@ -29,7 +29,7 @@ const EmailForm: React.FC<EmailFormProps> = ({ productname }) => {
       console.error("Error adding email:", error);
       toast.error("Something went wrong");
     } finally {
-      setLoading(false); // Reset loading to false after the submission completes
+      setLoading(false);
     }
   };
 
@@ -55,12 +55,11 @@ const EmailForm: React.FC<EmailFormProps> = ({ productname }) => {
         />
       </div>
       <button
-        disabled={isPending || loading} // Disable button when pending or loading
+        disabled={isPending || loading}
         type="submit"
         className="bg-blue-700 text-white shadow-button-shadow font-semibold py-2 px-3 rounded-md text-base transition-all duration-200"
       >
         {loading ? "Subscribing..." : "Subscribe"}{" "}
-        {/* Change button text based on loading state */}
       </button>
     </form>
   );
